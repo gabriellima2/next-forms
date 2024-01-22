@@ -1,6 +1,4 @@
-import { BaseInput, BaseInputProps } from '../atoms/base-input'
-import { BaseLabel } from '../atoms/base-label'
-import { TextError } from '../atoms/text-error'
+import { BaseInput, BaseLabel, TextError, type BaseInputProps } from '../atoms'
 
 type FieldProps = Omit<BaseInputProps, 'aria-invalid' | 'aria-describedby' | 'id'> & {
 	id: string

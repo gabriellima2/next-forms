@@ -1,5 +1,5 @@
-import { cn } from '@/helpers/cn'
 import { type HTMLAttributes } from 'react'
+import { cn } from '@/helpers/cn'
 
 export type TextErrorProps = HTMLAttributes<HTMLParagraphElement>
 
