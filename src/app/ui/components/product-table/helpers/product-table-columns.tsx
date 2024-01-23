@@ -2,7 +2,9 @@
 
 import { ProductEntity } from '@/entities/product.entity'
 import { ColumnDef } from '@tanstack/react-table'
-import Image from 'next/image'
+
+import { ProductCard } from '../components/product-card'
+import { StockMessage } from '@/helpers/stock-message'
 
 
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
@@ -13,21 +15,24 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
 		accessorKey: 'product',
 		header: 'Product',
-		accessorFn: (r) => ({ name: r.name, imageUrl: r.imageUrl }),
+		accessorFn: (value) => ({ name: value.name, imageUrl: value.imageUrl }),
 		cell: ({ cell }) => {
 			const value = cell.getValue() as Pick<ProductEntity, 'name' | 'imageUrl'>
-			return (
-				<div>
-					<Image src={value.imageUrl} alt={`Image of ${value.name}`} width={40} height={40} />
-					<p>{value.name}</p>
-				</div>
-			)
+			return <ProductCard name={value.name} imageUrl={value.imageUrl} />
 		},
 		id: 'product'
 	},
 	{
 		accessorKey: 'price',
-		header: 'Price'
+		header: 'Price',
+		cell: ({ row }) => {
+			const price = parseFloat(row.getValue('price'))
+			const formatted = new Intl.NumberFormat('pt-BR', {
+				style: 'currency',
+				currency: 'BRL'
+			}).format(price)
+			return <>{formatted}</>
+		}
 	},
 	{
 		accessorKey: 'category',
@@ -35,6 +40,11 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	},
 	{
 		accessorKey: 'stock',
-		header: 'Stock'
+		header: 'Stock',
+		cell: ({ row }) => {
+			const stockAmount: number = row.getValue('stock')
+			const message = !stockAmount ? StockMessage.OutOfStock : StockMessage.InStock
+			return <>{message}</>
+		}
 	},
 ]
