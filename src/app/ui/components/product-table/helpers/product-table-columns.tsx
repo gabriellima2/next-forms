@@ -1,9 +1,9 @@
 'use client'
 
+import { ProductEntity } from '@/entities/product.entity'
 import { ColumnDef } from '@tanstack/react-table'
 import Image from 'next/image'
 
-import { ProductEntity } from '../product-table'
 
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
