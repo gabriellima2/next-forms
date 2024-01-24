@@ -11,7 +11,8 @@ import { Button, Checkbox } from '@/app/ui/atoms'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
-    stockFilter: FilterFn<unknown>
+		stockFilter: FilterFn<unknown>
+		productFilter :FilterFn<unknown>
   }
 }
 
@@ -58,7 +59,8 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 			const value = cell.getValue() as Pick<ProductEntity, 'name' | 'imageUrl'>
 			return <ProductCard name={value.name} imageUrl={value.imageUrl} />
 		},
-		id: 'product'
+		id: 'product',
+		filterFn: 'productFilter'
 	},
 	{
 		accessorKey: 'price',

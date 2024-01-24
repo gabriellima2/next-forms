@@ -4,7 +4,7 @@ import {  ColumnFiltersState, SortingState, getCoreRowModel, getFilteredRowModel
 
 import { ProductTableHeader } from './components/product-table-header'
 import { ProductTableBody } from './components/product-table-body'
-import { SelectedRowsCounter } from '../../atoms'
+import { BaseInput, SelectedRowsCounter } from '../../atoms'
 import { Table } from '../table'
 
 import { productTableColumns } from './helpers/product-table-columns'
@@ -12,6 +12,7 @@ import type { ProductEntity } from '@/entities/product.entity'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../select'
 import { StockMessage } from '@/helpers/stock-message'
 import { StockFilterValues, stockFilter } from './helpers/stock-filter'
+import { productFilter } from './helpers/product-filter'
 
 type ProductTableProps = {
 	products: ProductEntity[]
@@ -31,7 +32,7 @@ export function ProductTable(props: ProductTableProps) {
 		onColumnFiltersChange: setColumnFilters,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
-		filterFns: { stockFilter },
+		filterFns: { stockFilter, productFilter },
 		state: { rowSelection, sorting, columnFilters }
 	})
 	const selectedRows = {
@@ -42,7 +43,7 @@ export function ProductTable(props: ProductTableProps) {
 		<div className="rounded border">
 			<header className='flex-1 p-4'>
 				<Select
-					value={(table.getColumn('stock')?.getFilterValue() as string) ?? ''}
+					value={(table.getColumn('stock')?.getFilterValue() as string) ?? StockFilterValues.All}
 					onValueChange={(value) => table.getColumn('stock')?.setFilterValue(value)}
 				>
 					<SelectTrigger className='w-[180px] rounded'>
@@ -54,6 +55,11 @@ export function ProductTable(props: ProductTableProps) {
 						<SelectItem value={StockFilterValues.OutOfStock}>{StockMessage.OutOfStock}</SelectItem>
 					</SelectContent>
 				</Select>
+				<BaseInput
+					value={(table.getColumn('product')?.getFilterValue() as string) ?? ''}
+					onChange={(e) => table.getColumn('product')?.setFilterValue(e.target.value)}
+					placeholder='Search...'
+				/>
 			</header>
 			<Table>
 				<ProductTableHeader groups={table.getHeaderGroups()} />
