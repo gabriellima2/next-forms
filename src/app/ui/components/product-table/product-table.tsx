@@ -1,13 +1,9 @@
 'use client'
-import { useState } from 'react'
-import {  ColumnFiltersState, SortingState, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
+import { useProductTable } from './hooks/use-product-table'
 
 import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
 import { BaseInput, SelectedRowsCounter } from '../../atoms'
 import { Table } from '../table'
-
-import { productTableColumns } from './helpers/product-table-columns'
-import { filters } from './helpers/filters'
 
 import type { ProductEntity } from '@/entities/product.entity'
 
@@ -17,27 +13,11 @@ type ProductTableProps = {
 
 export function ProductTable(props: ProductTableProps) {
 	const { products } = props
-	const [rowSelection, setRowSelection] = useState({})
-	const [sorting, setSorting] = useState<SortingState>([])
-	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-	const table = useReactTable({
-		data: products,
-		columns: productTableColumns,
-		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnFiltersChange: setColumnFilters,
-		onRowSelectionChange: setRowSelection,
-		onSortingChange: setSorting,
-		filterFns: { ...filters },
-		state: { rowSelection, sorting, columnFilters }
-	})
-	const selectedRows = {
-		total: table.getFilteredSelectedRowModel().rows.length,
-		selected: table.getFilteredRowModel().rows.length
-	}
-	const stockColumn = table.getColumn('stock')
+	const { table, selectedRows } = useProductTable({ products })
+
 	const productColumn = table.getColumn('product')
+	const stockColumn = table.getColumn('stock')
+
 	return (
 		<div className="rounded border">
 			<header className='flex-1 p-4'>
