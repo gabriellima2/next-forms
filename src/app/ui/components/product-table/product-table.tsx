@@ -2,17 +2,15 @@
 import { useState } from 'react'
 import {  ColumnFiltersState, SortingState, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
 
-import { ProductTableHeader } from './components/product-table-header'
-import { ProductTableBody } from './components/product-table-body'
+import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
 import { BaseInput, SelectedRowsCounter } from '../../atoms'
 import { Table } from '../table'
 
 import { productTableColumns } from './helpers/product-table-columns'
-import type { ProductEntity } from '@/entities/product.entity'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../select'
-import { StockMessage } from '@/helpers/stock-message'
-import { StockFilterValues, stockFilter } from './helpers/stock-filter'
 import { productFilter } from './helpers/product-filter'
+import { stockFilter } from './helpers/stock-filter'
+
+import type { ProductEntity } from '@/entities/product.entity'
 
 type ProductTableProps = {
 	products: ProductEntity[]
@@ -39,25 +37,18 @@ export function ProductTable(props: ProductTableProps) {
 		total: table.getFilteredSelectedRowModel().rows.length,
 		selected: table.getFilteredRowModel().rows.length
 	}
+	const stockColumn = table.getColumn('stock')
+	const productColumn = table.getColumn('product')
 	return (
 		<div className="rounded border">
 			<header className='flex-1 p-4'>
-				<Select
-					value={(table.getColumn('stock')?.getFilterValue() as string) ?? StockFilterValues.All}
-					onValueChange={(value) => table.getColumn('stock')?.setFilterValue(value)}
-				>
-					<SelectTrigger className='w-[180px] rounded'>
-						<SelectValue placeholder='Stock' />
-					</SelectTrigger>
-					<SelectContent className='rounded'>
-						<SelectItem value={StockFilterValues.All} defaultChecked>All</SelectItem>
-						<SelectItem value={StockFilterValues.InStock}>{StockMessage.InStock}</SelectItem>
-						<SelectItem value={StockFilterValues.OutOfStock}>{StockMessage.OutOfStock}</SelectItem>
-					</SelectContent>
-				</Select>
+				<FilterByStock
+					value={stockColumn?.getFilterValue() as string}
+					onChange={(value) => stockColumn?.setFilterValue(value)}
+				/>
 				<BaseInput
-					value={(table.getColumn('product')?.getFilterValue() as string) ?? ''}
-					onChange={(e) => table.getColumn('product')?.setFilterValue(e.target.value)}
+					value={(productColumn?.getFilterValue() as string) ?? ''}
+					onChange={(e) => productColumn?.setFilterValue(e.target.value)}
 					placeholder='Search...'
 				/>
 			</header>
