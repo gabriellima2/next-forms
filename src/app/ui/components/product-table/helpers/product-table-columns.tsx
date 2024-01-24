@@ -1,13 +1,15 @@
 'use client'
 
-import { ProductEntity } from '@/entities/product.entity'
 import { ColumnDef, FilterFn } from '@tanstack/react-table'
 
+import { ToggleSortingButton } from '../components/toggle-sorting-button'
+import { ProductActions } from '../components/product-actions'
 import { ProductCard } from '../components/product-card'
+import { Checkbox } from '@/app/ui/atoms'
+
 import { StockMessage } from '@/helpers/stock-message'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../dropdown-menu'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
-import { Button, Checkbox } from '@/app/ui/atoms'
+import type { ProductEntity } from '@/entities/product.entity'
+
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -19,16 +21,16 @@ declare module '@tanstack/table-core' {
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
 		id: 'select',
-		header: ({ table }) => (
-			<Checkbox
-				checked={
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomeRowsSelected() && 'indeterminate')
-				}
-				onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-				aria-label='select all'
-			/>
-		),
+		header: ({ table }) => {
+			const isChecked = table.getIsAllPageRowsSelected() || (table.getIsSomeRowsSelected() && 'indeterminate')
+			return (
+				<Checkbox
+					checked={isChecked}
+					onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+					aria-label='select all'
+				/>
+			)
+		},
 		cell: ({ row }) => (
 			<Checkbox
 				checked={row.getIsSelected()}
@@ -46,12 +48,12 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
 		accessorKey: 'product',
 		header: ({ column }) => {
-			const isSorted = column.getIsSorted() === 'asc'
+			const isASCSorted = column.getIsSorted() === 'asc'
 			return (
-				<Button variant='ghost' onClick={() => column.toggleSorting(isSorted)}>
-					Product
-					<ArrowUpDown className='ml-2 w-4 h-4' />
-				</Button>
+				<ToggleSortingButton
+					label='Product'
+					onClick={() => column.toggleSorting(isASCSorted)}
+				/>
 			)
 		},
 		accessorFn: (value) => ({ name: value.name, imageUrl: value.imageUrl }),
@@ -65,12 +67,12 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
 		accessorKey: 'price',
 		header: ({ column }) => {
-			const isSorted = column.getIsSorted() === 'asc'
+			const isASCSorted = column.getIsSorted() === 'asc'
 			return (
-				<Button variant='ghost' onClick={() => column.toggleSorting(isSorted)}>
-					Price
-					<ArrowUpDown className='ml-2 w-4 h-4' />
-				</Button>
+				<ToggleSortingButton
+					label='Price'
+					onClick={() => column.toggleSorting(isASCSorted)}
+				/>
 			)
 		},
 		cell: ({ row }) => {
@@ -100,26 +102,7 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 		id: 'actions',
 		cell: ({ row }) => {
 			const product = row.original
-			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant='ghost' size='sm'>
-							<span className="sr-only">Open menu</span>
-							<MoreHorizontal className='w-4 h-4' />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end'>
-						<DropdownMenuLabel>Actions</DropdownMenuLabel>
-						<DropdownMenuSeparator />
-						<DropdownMenuItem className='cursor-pointer' onClick={() => console.log('Edit ' + product)}>
-							Edit
-						</DropdownMenuItem>
-						<DropdownMenuItem className='cursor-pointer' onClick={() => console.log('Remove ' + product)}>
-							Delete
-						</DropdownMenuItem>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			)
+			return <ProductActions product={product} />
 		}
 	}
 ]

@@ -1,5 +1,6 @@
 export * from './selected-rows-counter'
 export * from './activity-indicator'
+export * from './menu-button'
 export * from './base-label'
 export * from './base-input'
 export * from './text-error'
