@@ -5,6 +5,9 @@ import { ColumnDef } from '@tanstack/react-table'
 
 import { ProductCard } from '../components/product-card'
 import { StockMessage } from '@/helpers/stock-message'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../dropdown-menu'
+import { MoreHorizontal } from 'lucide-react'
+import { Button } from '@/app/ui/atoms'
 
 
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
@@ -47,4 +50,30 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 			return <>{message}</>
 		}
 	},
+	{
+		id: 'actions',
+		cell: ({ row }) => {
+			const product = row.original
+			return (
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant='ghost' size='sm'>
+							<span className="sr-only">Open menu</span>
+							<MoreHorizontal className='w-4 h-4' />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align='end'>
+						<DropdownMenuLabel>Actions</DropdownMenuLabel>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem className='cursor-pointer' onClick={() => console.log('Edit ' + product)}>
+							Edit
+						</DropdownMenuItem>
+						<DropdownMenuItem className='cursor-pointer' onClick={() => console.log('Remove ' + product)}>
+							Delete
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			)
+		}
+	}
 ]
