@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import {  getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import {  SortingState, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
 
 import { ProductTableHeader } from './components/product-table-header'
 import { ProductTableBody } from './components/product-table-body'
@@ -17,12 +17,15 @@ type ProductTableProps = {
 export function ProductTable(props: ProductTableProps) {
 	const { products } = props
 	const [rowSelection, setRowSelection] = useState({})
+	const [sorting, setSorting] = useState<SortingState>([])
 	const table = useReactTable({
 		data: products,
 		columns: productTableColumns,
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 		onRowSelectionChange: setRowSelection,
-		state: { rowSelection }
+		onSortingChange: setSorting,
+		state: { rowSelection, sorting }
 	})
 	const selectedRows = {
 		total: table.getFilteredSelectedRowModel().rows.length,

@@ -6,7 +6,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { ProductCard } from '../components/product-card'
 import { StockMessage } from '@/helpers/stock-message'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../dropdown-menu'
-import { MoreHorizontal } from 'lucide-react'
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button, Checkbox } from '@/app/ui/atoms'
 
 
@@ -39,7 +39,15 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	},
 	{
 		accessorKey: 'product',
-		header: 'Product',
+		header: ({ column }) => {
+			const isSorted = column.getIsSorted() === 'asc'
+			return (
+				<Button variant='ghost' onClick={() => column.toggleSorting(isSorted)}>
+					Product
+					<ArrowUpDown className='ml-2 w-4 h-4' />
+				</Button>
+			)
+		},
 		accessorFn: (value) => ({ name: value.name, imageUrl: value.imageUrl }),
 		cell: ({ cell }) => {
 			const value = cell.getValue() as Pick<ProductEntity, 'name' | 'imageUrl'>
@@ -49,7 +57,15 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	},
 	{
 		accessorKey: 'price',
-		header: 'Price',
+		header: ({ column }) => {
+			const isSorted = column.getIsSorted() === 'asc'
+			return (
+				<Button variant='ghost' onClick={() => column.toggleSorting(isSorted)}>
+					Price
+					<ArrowUpDown className='ml-2 w-4 h-4' />
+				</Button>
+			)
+		},
 		cell: ({ row }) => {
 			const price = parseFloat(row.getValue('price'))
 			const formatted = new Intl.NumberFormat('pt-BR', {
