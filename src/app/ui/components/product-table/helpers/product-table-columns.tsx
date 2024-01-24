@@ -1,10 +1,7 @@
 'use client'
+import type { ColumnDef, FilterFn } from '@tanstack/react-table'
 
-import { ColumnDef, FilterFn } from '@tanstack/react-table'
-
-import { ToggleSortingButton } from '../components/toggle-sorting-button'
-import { ProductActions } from '../components/product-actions'
-import { ProductCard } from '../components/product-card'
+import { ProductActions, ProductCard, ToggleSortingButton } from '../components'
 import { Checkbox } from '@/app/ui/atoms'
 
 import { StockMessage } from '@/helpers/stock-message'
@@ -13,8 +10,8 @@ import type { ProductEntity } from '@/entities/product.entity'
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
-		stockFilter: FilterFn<unknown>
-		productFilter :FilterFn<unknown>
+		stock: FilterFn<unknown>
+		product: FilterFn<unknown>
   }
 }
 
@@ -62,7 +59,7 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 			return <ProductCard name={value.name} imageUrl={value.imageUrl} />
 		},
 		id: 'product',
-		filterFn: 'productFilter'
+		filterFn: 'product'
 	},
 	{
 		accessorKey: 'price',
@@ -96,7 +93,7 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 			const message = !stockAmount ? StockMessage.OutOfStock : StockMessage.InStock
 			return <>{message}</>
 		},
-		filterFn: 'stockFilter'
+		filterFn: 'stock'
 	},
 	{
 		id: 'actions',

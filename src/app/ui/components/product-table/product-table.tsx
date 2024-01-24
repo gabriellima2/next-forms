@@ -7,8 +7,7 @@ import { BaseInput, SelectedRowsCounter } from '../../atoms'
 import { Table } from '../table'
 
 import { productTableColumns } from './helpers/product-table-columns'
-import { productFilter } from './helpers/product-filter'
-import { stockFilter } from './helpers/stock-filter'
+import { filters } from './helpers/filters'
 
 import type { ProductEntity } from '@/entities/product.entity'
 
@@ -30,7 +29,7 @@ export function ProductTable(props: ProductTableProps) {
 		onColumnFiltersChange: setColumnFilters,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
-		filterFns: { stockFilter, productFilter },
+		filterFns: { ...filters },
 		state: { rowSelection, sorting, columnFilters }
 	})
 	const selectedRows = {
