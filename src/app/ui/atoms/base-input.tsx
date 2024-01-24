@@ -9,7 +9,7 @@ export function BaseInput(props: BaseInputProps) {
 		<input
 			className={cn(
 				className,
-				'w-full h-[40px] bg-transparent p-2 border border-zinc-700 rounded outline-none placeholder:text-zinc-500 focus:bg-zinc-800',
+				'w-full h-[40px] bg-transparent text-sm p-2 border border-input rounded outline-none placeholder:text-muted-foreground focus:bg-primary-foreground',
 			)}
 			{...rest}
 		/>
