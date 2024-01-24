@@ -1,7 +1,7 @@
 'use client'
 
 import { ProductEntity } from '@/entities/product.entity'
-import { ColumnDef } from '@tanstack/react-table'
+import { ColumnDef, FilterFn } from '@tanstack/react-table'
 
 import { ProductCard } from '../components/product-card'
 import { StockMessage } from '@/helpers/stock-message'
@@ -9,6 +9,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
 import { Button, Checkbox } from '@/app/ui/atoms'
 
+declare module '@tanstack/table-core' {
+  interface FilterFns {
+    stockFilter: FilterFn<unknown>
+  }
+}
 
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
 	{
@@ -86,7 +91,8 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 			const stockAmount: number = row.getValue('stock')
 			const message = !stockAmount ? StockMessage.OutOfStock : StockMessage.InStock
 			return <>{message}</>
-		}
+		},
+		filterFn: 'stockFilter'
 	},
 	{
 		id: 'actions',
