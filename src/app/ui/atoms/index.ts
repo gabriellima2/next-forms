@@ -1,3 +1,4 @@
+export * from './selected-rows-counter'
 export * from './activity-indicator'
 export * from './base-label'
 export * from './base-input'
