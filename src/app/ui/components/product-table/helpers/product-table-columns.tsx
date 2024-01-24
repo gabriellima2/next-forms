@@ -7,10 +7,32 @@ import { ProductCard } from '../components/product-card'
 import { StockMessage } from '@/helpers/stock-message'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
-import { Button } from '@/app/ui/atoms'
+import { Button, Checkbox } from '@/app/ui/atoms'
 
 
 export const productTableColumns: ColumnDef<ProductEntity>[] = [
+	{
+		id: 'select',
+		header: ({ table }) => (
+			<Checkbox
+				checked={
+					table.getIsAllPageRowsSelected() ||
+					(table.getIsSomeRowsSelected() && 'indeterminate')
+				}
+				onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
+				aria-label='select all'
+			/>
+		),
+		cell: ({ row }) => (
+			<Checkbox
+				checked={row.getIsSelected()}
+				onCheckedChange={(value) => row.toggleSelected(!!value)}
+				aria-label='select row'
+			/>
+		),
+		enableSorting: false,
+		enableHiding: false
+	},
 	{
 		accessorKey: 'id',
 		header: 'ID'

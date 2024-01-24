@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import {  getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
 import { ProductTableHeader } from './components/product-table-header'
@@ -14,10 +15,13 @@ type ProductTableProps = {
 
 export function ProductTable(props: ProductTableProps) {
 	const { products } = props
+	const [rowSelection, setRowSelection] = useState({})
 	const table = useReactTable({
 		data: products,
 		columns: productTableColumns,
-		getCoreRowModel: getCoreRowModel()
+		getCoreRowModel: getCoreRowModel(),
+		onRowSelectionChange: setRowSelection,
+		state: { rowSelection }
 	})
 	return (
 		<div className="rounded-md border">
