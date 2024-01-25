@@ -1,5 +1,6 @@
 export * from './toggle-sorting-button'
 export * from './product-table-header'
+export * from './add-product-dialog'
 export * from './product-table-body'
 export * from './filter-by-stock'
 export * from './product-actions'
