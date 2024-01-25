@@ -1,3 +1,5 @@
 export * from './field'
 export * from './table'
+export * from './product-form'
 export * from './product-table'
+export * from './product-dialog'

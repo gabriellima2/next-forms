@@ -1,6 +1,6 @@
 import { BaseInput, BaseLabel, TextError, type BaseInputProps } from '../atoms'
 
-type FieldProps = Omit<BaseInputProps, 'aria-invalid' | 'aria-describedby' | 'id'> & {
+export type FieldProps = Omit<BaseInputProps, 'aria-invalid' | 'aria-describedby' | 'id'> & {
 	id: string
 	required?: boolean
 	labelText?: string

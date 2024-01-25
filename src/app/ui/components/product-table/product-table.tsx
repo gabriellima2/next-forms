@@ -1,7 +1,7 @@
 'use client'
 import { useProductTable } from './hooks/use-product-table'
 
-import { FilterByStock, ProductTableBody, ProductTableHeader, AddProductDialog } from './components'
+import { FilterByStock, ProductTableBody, ProductTableHeader, AddProduct } from './components'
 import { BaseInput, SelectedRowsCounter, PaginationButton } from '../../atoms'
 import { Table } from '../table'
 
@@ -33,7 +33,7 @@ export function ProductTable(props: ProductTableProps) {
 						onChange={(value) => stockColumn?.setFilterValue(value)}
 					/>
 				</section>
-				<AddProductDialog />
+				<AddProduct />
 			</header>
 			<Table>
 				<ProductTableHeader groups={table.getHeaderGroups()} />
