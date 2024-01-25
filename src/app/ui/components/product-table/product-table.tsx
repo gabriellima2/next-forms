@@ -2,7 +2,7 @@
 import { useProductTable } from './hooks/use-product-table'
 
 import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
-import { BaseInput, SelectedRowsCounter } from '../../atoms'
+import { BaseInput, SelectedRowsCounter, PaginationButton } from '../../atoms'
 import { Table } from '../table'
 
 import type { ProductEntity } from '@/entities/product.entity'
@@ -31,17 +31,30 @@ export function ProductTable(props: ProductTableProps) {
 					value={stockColumn?.getFilterValue() as string}
 					onChange={(value) => stockColumn?.setFilterValue(value)}
 				/>
-
 			</header>
 			<Table>
 				<ProductTableHeader groups={table.getHeaderGroups()} />
 				<ProductTableBody rows={table.getRowModel().rows} />
 			</Table>
-			<footer className="flex-1 p-4">
+			<footer className="flex flex-row items-center justify-between flex-1 p-4">
 				<SelectedRowsCounter
 					total={selectedRows.total}
 					totalSelected={selectedRows.selected}
 				/>
+				<section className='flex flex-row gap-4'>
+					<PaginationButton
+						onClick={() => table.previousPage()}
+						disabled={!table.getCanPreviousPage()}
+					>
+						Previous
+					</PaginationButton>
+					<PaginationButton
+						onClick={() => table.nextPage()}
+						disabled={!table.getCanNextPage()}
+					>
+						Next
+					</PaginationButton>
+				</section>
 			</footer>
 		</div>
 	)

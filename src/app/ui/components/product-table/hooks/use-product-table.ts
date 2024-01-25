@@ -4,6 +4,7 @@ import {
 	getSortedRowModel,
 	getFilteredRowModel,
 	type Table,
+	getPaginationRowModel,
 } from '@tanstack/react-table'
 
 import { useProductTableInteractions } from './use-product-table-interactions'
@@ -41,6 +42,7 @@ export function useProductTable(params: UseProductTableParams): UseProductTableR
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 		onColumnFiltersChange,
 		onRowSelectionChange,
 		onSortingChange,
