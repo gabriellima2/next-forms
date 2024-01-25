@@ -1,8 +1,8 @@
 'use client'
 import { useProductTable } from './hooks/use-product-table'
 
+import { BaseInput, SelectedRowsCounter, PaginationButton, Button } from '../../atoms'
 import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
-import { BaseInput, SelectedRowsCounter, PaginationButton } from '../../atoms'
 import { Table } from '../table'
 
 import type { ProductEntity } from '@/entities/product.entity'
@@ -20,17 +20,22 @@ export function ProductTable(props: ProductTableProps) {
 
 	return (
 		<div className="rounded border">
-			<header className='flex-1 p-4 flex gap-4 flex-col sm:flex-row'>
-				<BaseInput
-					value={(productColumn?.getFilterValue() as string) ?? ''}
-					onChange={(e) => productColumn?.setFilterValue(e.target.value)}
-					placeholder='Product Name'
-					className='min-w-[230px] sm:max-w-[440px]'
-				/>
-				<FilterByStock
-					value={stockColumn?.getFilterValue() as string}
-					onChange={(value) => stockColumn?.setFilterValue(value)}
-				/>
+			<header className='flex gap-4 md:items-center flex-1 p-4 flex-col md:flex-row'>
+				<section className='flex-1 flex gap-4 flex-col sm:flex-row'>
+					<BaseInput
+						value={(productColumn?.getFilterValue() as string) ?? ''}
+						onChange={(e) => productColumn?.setFilterValue(e.target.value)}
+						placeholder='Product Name'
+						className='min-w-[230px] sm:max-w-[440px]'
+					/>
+					<FilterByStock
+						value={stockColumn?.getFilterValue() as string}
+						onChange={(value) => stockColumn?.setFilterValue(value)}
+					/>
+				</section>
+				<Button title='Add Product' size='sm' onClick={() => console.log('Add')}>
+					New Product
+				</Button>
 			</header>
 			<Table>
 				<ProductTableHeader groups={table.getHeaderGroups()} />
