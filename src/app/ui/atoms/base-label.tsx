@@ -6,6 +6,6 @@ export type BaseLabelProps = LabelHTMLAttributes<HTMLLabelElement>
 export function BaseLabel(props: BaseLabelProps) {
 	const { className, ...rest } = props
 	return (
-		<label className={cn(className, 'text-regular font-medium')} {...rest} />
+		<label className={cn(className, 'text-sm font-medium')} {...rest} />
 	)
 }

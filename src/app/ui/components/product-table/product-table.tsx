@@ -20,16 +20,18 @@ export function ProductTable(props: ProductTableProps) {
 
 	return (
 		<div className="rounded border">
-			<header className='flex-1 p-4'>
+			<header className='flex-1 p-4 flex gap-4 flex-col sm:flex-row'>
+				<BaseInput
+					value={(productColumn?.getFilterValue() as string) ?? ''}
+					onChange={(e) => productColumn?.setFilterValue(e.target.value)}
+					placeholder='Product Name'
+					className='min-w-[230px] sm:max-w-[440px]'
+				/>
 				<FilterByStock
 					value={stockColumn?.getFilterValue() as string}
 					onChange={(value) => stockColumn?.setFilterValue(value)}
 				/>
-				<BaseInput
-					value={(productColumn?.getFilterValue() as string) ?? ''}
-					onChange={(e) => productColumn?.setFilterValue(e.target.value)}
-					placeholder='Search...'
-				/>
+
 			</header>
 			<Table>
 				<ProductTableHeader groups={table.getHeaderGroups()} />
