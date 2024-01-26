@@ -6,7 +6,7 @@ import {
 	DropdownMenuSeparator,
 } from '../../../dropdown-menu'
 import { ProductActionsItem } from './components/product-actions-item'
-import { EditProduct } from '../edit-product'
+import { ProductActionsDialog } from '../../../product-actions-dialog'
 import { MenuButton } from '@/app/ui/atoms'
 
 import type { ProductEntity } from '@/entities/product.entity'
@@ -25,7 +25,7 @@ export function ProductActions(props: ProductActionsProps) {
 			<DropdownMenuContent align='end'>
 				<DropdownMenuLabel>Actions</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<EditProduct
+				<ProductActionsDialog.Edit
 					values={{ ...product }}
 					renderTrigger={() => <ProductActionsItem label='Edit' onSelect={(e) => e.preventDefault()} />}
 				/>

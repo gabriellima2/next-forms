@@ -1,5 +1,5 @@
-import { ProductDialog } from '../../product-dialog'
-import { ProductForm } from '../../product-form'
+import { ProductDialog } from '../product-dialog'
+import { ProductForm } from '../product-form'
 import { Button } from '@/app/ui/atoms'
 
 export function AddProduct() {
