@@ -5,9 +5,9 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuSeparator,
 } from '../../../dropdown-menu'
-
 import { ProductActionsItem } from './components/product-actions-item'
-import {  MenuButton } from '@/app/ui/atoms'
+import { EditProduct } from '../edit-product'
+import { MenuButton } from '@/app/ui/atoms'
 
 import type { ProductEntity } from '@/entities/product.entity'
 
@@ -25,9 +25,9 @@ export function ProductActions(props: ProductActionsProps) {
 			<DropdownMenuContent align='end'>
 				<DropdownMenuLabel>Actions</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<ProductActionsItem
-					label='Edit'
-					onClick={() => console.log('Edit ' + product)}
+				<EditProduct
+					values={{ ...product }}
+					renderTrigger={() => <ProductActionsItem label='Edit' onSelect={(e) => e.preventDefault()} />}
 				/>
 				<ProductActionsItem
 					label='Delete'
