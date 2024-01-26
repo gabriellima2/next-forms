@@ -10,6 +10,7 @@ import { ProductActionsDialog } from '../../../product-actions-dialog'
 import { MenuButton } from '@/app/ui/atoms'
 
 import type { ProductEntity } from '@/entities/product.entity'
+import { deleteProduct } from '@/app/product/actions'
 
 type ProductActionsProps = {
 	product: ProductEntity
@@ -26,12 +27,13 @@ export function ProductActions(props: ProductActionsProps) {
 				<DropdownMenuLabel>Actions</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<ProductActionsDialog.Edit
+					id={product.id}
 					values={{ ...product }}
 					renderTrigger={() => <ProductActionsItem label='Edit' onSelect={(e) => e.preventDefault()} />}
 				/>
 				<ProductActionsItem
 					label='Delete'
-					onClick={() => console.log('Remove ' + product)}
+					onClick={() => deleteProduct(product.id)}
 				/>
 			</DropdownMenuContent>
 		</DropdownMenu>

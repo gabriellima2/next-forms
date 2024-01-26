@@ -2,6 +2,8 @@ import { ProductDialog } from '../product-dialog'
 import { ProductForm } from '../product-form'
 import { Button } from '@/app/ui/atoms'
 
+import { createProduct } from '@/app/product/actions'
+
 export function AddProduct() {
 	return (
 		<ProductDialog.Root>
@@ -10,7 +12,7 @@ export function AddProduct() {
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='New Product' description='Fill in the fields to add a new product' />
-				<ProductForm.Root>
+				<ProductForm.Root action={createProduct}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name />
 						<ProductForm.Fields.ImageUrl />

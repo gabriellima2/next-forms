@@ -14,6 +14,7 @@ export function Field(props: FieldProps) {
 			{labelText && <BaseLabel htmlFor={id}>{labelText}{required && '*'}</BaseLabel>}
 			<BaseInput
 				id={id}
+				name={id}
 				aria-describedby='error-message'
 				aria-required={required}
 				aria-invalid={!!errorMessage}
