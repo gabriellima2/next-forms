@@ -7,7 +7,7 @@ import { ErrorMessages } from '../constants/error-messages'
 import type { ProductEntity } from '@/entities/product.entity'
 
 export type ProductActionsFormState = {
-	success: boolean
+	success?: boolean
 	errors?: {
 		validation?: Partial<{
 			[P in keyof Omit<ProductEntity, 'id'>]: string;
@@ -28,7 +28,7 @@ function getFormValues(formData: FormData): Partial<Omit<ProductEntity, 'id'>> {
 }
 
 export async function createProduct(
-	prevState: ProductActionsFormState,
+	_: ProductActionsFormState,
 	formData: FormData
 ): Promise<ProductActionsFormState> {
 	const product = getFormValues(formData)

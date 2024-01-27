@@ -5,10 +5,10 @@ import { Button, TextError } from '@/app/ui/atoms'
 import { ProductDialog } from '../product-dialog'
 import { ProductForm } from '../product-form'
 
-import { createProduct, type ProductActionsFormState } from '@/app/product/actions'
+import { createProduct } from '@/app/product/actions'
 
 export function AddProduct() {
-	const [state, formAction] = useFormState<ProductActionsFormState>(createProduct, { message: null })
+	const [state, formAction] = useFormState(createProduct, {})
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger>
