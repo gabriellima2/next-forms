@@ -1,14 +1,31 @@
 'use client'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
-import { Button, TextError } from '@/app/ui/atoms'
+import { useToast } from '@/hooks/use-toast'
+
 import { ProductDialog } from '../product-dialog'
 import { ProductForm } from '../product-form'
+import { Button } from '@/app/ui/atoms'
 
 import { createProduct } from '@/app/product/actions'
 
 export function AddProduct() {
 	const [state, formAction] = useFormState(createProduct, {})
+	const { toast } = useToast()
+
+	useEffect(() => {
+		if (state.success) {
+			toast({ title: 'Success', description: 'Product added successfully' })
+		}
+	}, [toast, state.success])
+
+	useEffect(() => {
+		if (state.errors?.submit) {
+			toast({ title: 'Error', description: state.errors.submit })
+		}
+	}, [toast, state.errors?.submit])
+
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger>
@@ -24,7 +41,6 @@ export function AddProduct() {
 						<ProductForm.Fields.Category errorMessage={state.errors?.validation?.category} />
 						<ProductForm.Fields.Stock errorMessage={state.errors?.validation?.stock} />
 					</ProductForm.Fieldset>
-					{state.errors?.submit && <TextError>{state.errors.submit}</TextError>}
 					<ProductDialog.Footer>
 						<ProductDialog.Close>Cancel</ProductDialog.Close>
 						<ProductForm.SubmitButton>Add</ProductForm.SubmitButton>
