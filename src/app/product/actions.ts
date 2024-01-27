@@ -1,21 +1,22 @@
 'use server'
 import { sql } from '@vercel/postgres'
 
-import { ProductEntity } from '@/entities/product.entity'
-import { ProductSchema } from '@/schemas/product.schema'
+import { productValidation } from '@/validations/product.validation'
+import { ErrorMessages } from '../constants/error-messages'
 
-type FieldErrors = Partial<{
-		[P in keyof Omit<ProductEntity, 'id'>]: string;
-		}>;
-export type FormState = {
+import type { ProductEntity } from '@/entities/product.entity'
+
+export type ProductActionsFormState = {
+	success: boolean
 	errors?: {
-		fields?: FieldErrors
+		validation?: Partial<{
+			[P in keyof Omit<ProductEntity, 'id'>]: string;
+		}>
 		submit?: string
 	}
 }
-type Fields = Partial<Omit<ProductEntity, 'id'>>
 
-function getFieldsValue(formData: FormData): Fields {
+function getFormValues(formData: FormData): Partial<Omit<ProductEntity, 'id'>> {
 	const stock = formData.get('stock')?.toString()
 	return {
 		name: formData.get('name')?.toString() || undefined,
@@ -26,32 +27,21 @@ function getFieldsValue(formData: FormData): Fields {
 	}
 }
 
-function validate(product: Fields) {
-	const validatedProduct = ProductSchema.safeParse(product)
-	if (!validatedProduct.success) {
-		const { fieldErrors } = validatedProduct.error.flatten()
-		const refinedErrors = Object.entries(fieldErrors).reduce((acc, current) => {
-			const [key, errors] = current
-			acc = { ...acc, [key]: errors[0] }
-			return acc
-		}, {} as FieldErrors)
-		return { fieldErrors: refinedErrors  }
-	}
-	return {}
-}
-
-export async function createProduct(prevState: FormState, formData: FormData): Promise<FormState> {
-	const product = getFieldsValue(formData)
-	const { fieldErrors } = validate(product)
-	if (fieldErrors) return { errors: { fields: fieldErrors } }
+export async function createProduct(
+	prevState: ProductActionsFormState,
+	formData: FormData
+): Promise<ProductActionsFormState> {
+	const product = getFormValues(formData)
+	const validationError = productValidation(product)
+	if (validationError) return { success: false, errors: { validation: validationError } }
 	try {
 		await sql`
 			INSERT INTO proucts (name, imageUrl, price, category, stock)
 			VALUES (${product.name}, ${product.imageUrl}, ${product.price}, ${product.category}, ${product.stock})
 		`
-		return {}
+		return { success: true }
 	} catch (err) {
-		return { errors: { submit: 'An unexpected error occurred please try again later' } }
+		return { success: false, errors: { submit: ErrorMessages.UnexpectedError } }
 	}
 }
 
