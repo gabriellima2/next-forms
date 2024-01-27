@@ -36,11 +36,12 @@ export async function createProduct(
 	if (validationError) return { success: false, errors: { validation: validationError } }
 	try {
 		await sql`
-			INSERT INTO proucts (name, imageUrl, price, category, stock)
+			INSERT INTO products (name, imageUrl, price, category, stock)
 			VALUES (${product.name}, ${product.imageUrl}, ${product.price}, ${product.category}, ${product.stock})
 		`
 		return { success: true }
 	} catch (err) {
+		console.log(err)
 		return { success: false, errors: { submit: ErrorMessages.UnexpectedError } }
 	}
 }
