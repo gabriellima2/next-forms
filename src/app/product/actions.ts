@@ -45,10 +45,10 @@ export async function createProduct(
 	}
 }
 
-export async function editProduct(id: string, formData: FormData) {
+export async function editProduct(id: number, formData: FormData) {
 	console.log(id, formData)
 }
 
-export async function deleteProduct(id: string) {
-	console.log(id)
+export async function deleteProduct(id: number) {
+	await sql`DELETE FROM products WHERE products.id = ${id};`
 }

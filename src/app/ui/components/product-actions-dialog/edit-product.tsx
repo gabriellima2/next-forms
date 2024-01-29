@@ -5,7 +5,7 @@ import type { ProductEntity } from '@/entities/product.entity'
 import { editProduct } from '@/app/product/actions'
 
 type EditProductProps = {
-	id: string
+	id: number
 	values: ProductEntity
 	renderTrigger: () => React.JSX.Element
 }
