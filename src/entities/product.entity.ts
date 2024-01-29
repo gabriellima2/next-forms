@@ -1,5 +1,5 @@
 export interface ProductEntity {
-	id: string
+	id: number
 	name: string
 	imageUrl?: string
 	price: string
