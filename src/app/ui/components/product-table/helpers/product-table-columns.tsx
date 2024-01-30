@@ -1,8 +1,9 @@
 'use client'
 import type { ColumnDef, FilterFn } from '@tanstack/react-table'
 
-import { ProductActions, ProductCard, ToggleSortingButton } from '../components'
+import { ProductActions, ToggleSortingButton } from '../components'
 import { Checkbox } from '@/app/ui/atoms'
+import { ProductCard } from '../..'
 
 import { StockMessage } from '@/helpers/stock-message'
 import type { ProductEntity } from '@/entities/product.entity'

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { EmptyImage } from '@/app/ui/atoms'
 
 type ProductCardProps = {
 	name: string
@@ -12,7 +13,7 @@ export function ProductCard(props: ProductCardProps) {
 			{imageUrl ? (
 				<Image src={imageUrl} alt={`Image of ${name}`} width={40} height={40} />
 			) :
-				<div className='block w-[40px] h-[40px] bg-input rounded'></div>
+				<EmptyImage />
 			}
 			<p>{name}</p>
 		</div>
