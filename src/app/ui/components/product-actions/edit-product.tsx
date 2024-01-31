@@ -7,15 +7,15 @@ import { editProduct } from '@/app/product/actions'
 type EditProductProps = {
 	id: number
 	values: ProductEntity
-	renderTrigger: () => React.JSX.Element
+	trigger: React.JSX.Element
 }
 
 export function EditProduct(props: EditProductProps) {
-	const { id, values, renderTrigger } = props
+	const { id, values, trigger } = props
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger asChild>
-				{renderTrigger()}
+				{trigger}
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='Edit Product' description='Fill in the fields to add a new product' />

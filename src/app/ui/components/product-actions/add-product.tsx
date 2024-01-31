@@ -1,16 +1,20 @@
 'use client'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
 import { useToast } from '@/hooks/use-toast'
 
 import { ProductDialog } from '../product-dialog'
 import { ProductForm } from '../product-form'
-import { Button } from '@/app/ui/atoms'
 
 import { createProduct } from '@/app/product/actions'
 
-export function AddProduct() {
+type AddProductProps = {
+	trigger: React.JSX.Element
+}
+
+export function AddProduct(props: AddProductProps) {
+	const { trigger } = props
 	const [state, formAction] = useFormState(createProduct, {})
 	const { toast } = useToast()
 
@@ -29,7 +33,7 @@ export function AddProduct() {
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger>
-				<Button>New Product</Button>
+				{trigger}
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='New Product' description='Fill in the fields to add a new product' />

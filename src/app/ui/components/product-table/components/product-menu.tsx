@@ -4,19 +4,19 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 	DropdownMenuSeparator,
-} from '../../../dropdown-menu'
-import { ProductActionsItem } from './components/product-actions-item'
-import { ProductActionsDialog } from '../../../product-actions-dialog'
+	DropdownMenuItem,
+} from '../../dropdown-menu'
 import { MenuButton } from '@/app/ui/atoms'
 
 import type { ProductEntity } from '@/entities/product.entity'
 import { deleteProduct } from '@/app/product/actions'
+import { ProductActions } from '../../product-actions'
 
 type ProductActionsProps = {
 	product: ProductEntity
 }
 
-export function ProductActions(props: ProductActionsProps) {
+export function ProductMenu(props: ProductActionsProps) {
 	const { product } = props
 	return (
 		<DropdownMenu>
@@ -26,15 +26,20 @@ export function ProductActions(props: ProductActionsProps) {
 			<DropdownMenuContent align='end'>
 				<DropdownMenuLabel>Actions</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<ProductActionsDialog.Edit
+				<ProductActions.Edit
 					id={product.id}
 					values={{ ...product }}
-					renderTrigger={() => <ProductActionsItem label='Edit' onSelect={(e) => e.preventDefault()} />}
+					trigger={
+						<DropdownMenuItem className='cursor-pointer' onSelect={(e) => e.preventDefault()}>
+							Edit
+						</DropdownMenuItem>
+					}
 				/>
-				<ProductActionsItem
-					label='Delete'
-					onClick={() => deleteProduct(product.id)}
-				/>
+				<ProductActions.Delete trigger={
+					<DropdownMenuItem className='cursor-pointer' onClick={() => deleteProduct(product.id)}>
+						Delete
+					</DropdownMenuItem>
+				} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

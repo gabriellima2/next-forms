@@ -1,7 +1,7 @@
 'use client'
 import type { ColumnDef, FilterFn } from '@tanstack/react-table'
 
-import { ProductActions, ToggleSortingButton } from '../components'
+import { ProductMenu, ToggleSortingButton } from '../components'
 import { Checkbox } from '@/app/ui/atoms'
 import { ProductCard } from '../..'
 
@@ -100,7 +100,7 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 		id: 'actions',
 		cell: ({ row }) => {
 			const product = row.original
-			return <ProductActions product={product} />
+			return <ProductMenu product={product} />
 		}
 	}
 ]
