@@ -1,16 +1,16 @@
 import { Suspense } from 'react'
+import { sql } from '@vercel/postgres'
 
 import { ProductTable } from './ui/components'
-import { makeProductServiceImpl } from '@/services/impl/product.service.impl'
+import type { ProductEntity } from '@/entities/product.entity'
 
-const service = makeProductServiceImpl('http://localhost:3000')
 
 export default async function Home() {
-	const products = await service.getAll()
+	const { rows } = await sql<ProductEntity>`SELECT * FROM products;`
 	return (
 		<div className="container mx-auto py-10">
 			<Suspense fallback={<p>Loading</p>}>
-				<ProductTable products={products} />
+				<ProductTable products={rows} />
 			</Suspense>
 		</div>
 	)

@@ -1,5 +1,6 @@
 'use server'
 import { sql } from '@vercel/postgres'
+import { revalidatePath } from 'next/cache'
 
 import { productValidation } from '@/validations/product.validation'
 import { ErrorMessages } from '../constants/error-messages'
@@ -40,6 +41,7 @@ export async function createProduct(
 			INSERT INTO products (name, imageUrl, price, category, stock)
 			VALUES (${product.name}, ${product.imageUrl}, ${parseDecimal(product.price!)}, ${product.category}, ${product.stock})
 		`
+		revalidatePath('/')
 		return { success: true }
 	} catch (err) {
 		const message = (err as Error).message ?? ErrorMessages.UnexpectedError
