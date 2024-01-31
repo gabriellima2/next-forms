@@ -1,4 +1,4 @@
-import { type FieldsetHTMLAttributes, type FormHTMLAttributes } from 'react'
+import { forwardRef, type FieldsetHTMLAttributes, type FormHTMLAttributes } from 'react'
 
 import { Button, type ButtonProps } from '../atoms'
 import { Field, type FieldProps } from '.'
@@ -7,12 +7,14 @@ import { cn } from '@/helpers/cn'
 
 type DefaultFieldProps = Omit<FieldProps, 'id'>
 
-const Root = (props: FormHTMLAttributes<HTMLFormElement>) => {
+const Root = forwardRef<HTMLFormElement, FormHTMLAttributes<HTMLFormElement>>((props, ref) => {
 	const { className, ...rest } = props
 	return (
-		<form className={cn(className, 'flex flex-col gap-8' )} {...rest} />
+		<form ref={ref} className={cn(className, 'flex flex-col gap-8' )} {...rest} />
 	)
-}
+})
+
+Root.displayName = 'Root'
 
 const Fieldset = (props: FieldsetHTMLAttributes<HTMLFieldSetElement>) => {
 	const { className, ...rest } = props

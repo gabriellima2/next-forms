@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useFormState } from 'react-dom'
 
 import { useToast } from '@/hooks/use-toast'
@@ -15,20 +15,22 @@ type AddProductProps = {
 
 export function AddProduct(props: AddProductProps) {
 	const { trigger } = props
+	const formRef = useRef<HTMLFormElement | null>(null)
 	const [state, formAction] = useFormState(createProduct, {})
 	const { toast } = useToast()
 
 	useEffect(() => {
 		if (state.success) {
 			toast({ title: 'Success', description: 'Product added successfully' })
+			formRef.current?.reset()
 		}
 	}, [toast, state.success])
 
 	useEffect(() => {
-		if (state.errors?.submit) {
+		if (state.errors && state.errors.submit) {
 			toast({ title: 'Error', description: state.errors.submit })
 		}
-	}, [toast, state.errors?.submit])
+	}, [toast, state.errors])
 
 	return (
 		<ProductDialog.Root>
@@ -37,7 +39,7 @@ export function AddProduct(props: AddProductProps) {
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='New Product' description='Fill in the fields to add a new product' />
-				<ProductForm.Root action={formAction}>
+				<ProductForm.Root ref={formRef} action={formAction}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name errorMessage={state.errors?.validation?.name} />
 						<ProductForm.Fields.ImageUrl errorMessage={state.errors?.validation?.imageUrl} />
