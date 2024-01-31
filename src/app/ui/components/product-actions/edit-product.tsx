@@ -18,18 +18,18 @@ export function EditProduct(props: EditProductProps) {
 				{trigger}
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
-				<ProductDialog.Header title='Edit Product' description='Fill in the fields to add a new product' />
+				<ProductDialog.Header title='Edit Product' description='Change the fields you want to edit' />
 				<ProductForm.Root action={editProduct.bind(null, id)}>
 					<ProductForm.Fieldset>
-						<ProductForm.Fields.Name value={values.name} />
-						<ProductForm.Fields.ImageUrl value={values.imageUrl} />
-						<ProductForm.Fields.Price value={values.price} />
-						<ProductForm.Fields.Category value={values.category} />
-						<ProductForm.Fields.Stock value={values.stock} />
+						<ProductForm.Fields.Name defaultValue={values.name} />
+						<ProductForm.Fields.ImageUrl defaultValue={values.imageUrl} />
+						<ProductForm.Fields.Price defaultValue={values.price} />
+						<ProductForm.Fields.Category defaultValue={values.category} />
+						<ProductForm.Fields.Stock defaultValue={values.stock} />
 					</ProductForm.Fieldset>
 					<ProductDialog.Footer>
 						<ProductDialog.Close>Cancel</ProductDialog.Close>
-						<ProductForm.SubmitButton>Add</ProductForm.SubmitButton>
+						<ProductForm.SubmitButton>Edit</ProductForm.SubmitButton>
 					</ProductDialog.Footer>
 				</ProductForm.Root>
 			</ProductDialog.Content>
