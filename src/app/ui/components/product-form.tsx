@@ -1,4 +1,6 @@
+'use client'
 import { forwardRef, type FieldsetHTMLAttributes, type FormHTMLAttributes } from 'react'
+import { useFormStatus } from 'react-dom'
 
 import { Button, type ButtonProps } from '../atoms'
 import { Field, type FieldProps } from '.'
@@ -45,8 +47,9 @@ const Stock = (props: DefaultFieldProps) => (
 
 const SubmitButton = (props: ButtonProps) => {
 	const { className, ...rest } = props
+	const { pending } = useFormStatus()
 	return (
-		<Button type="submit" className={cn(className, 'flex-1')} size='sm' {...rest} />
+		<Button type="submit" className={cn(className, 'flex-1')} size='sm' {...rest} isLoading={pending} />
 	)
 }
 
