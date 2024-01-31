@@ -1,13 +1,8 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
-import { useFormState } from 'react-dom'
+import { ProductDialog } from '../../product-dialog'
+import { ProductForm } from '../../product-form'
 
-import { useToast } from '@/hooks/use-toast'
-
-import { ProductDialog } from '../product-dialog'
-import { ProductForm } from '../product-form'
-
-import { createProduct } from '@/app/product/actions'
+import { useAddProduct } from './hooks/use-add-product'
 
 type AddProductProps = {
 	trigger: React.JSX.Element
@@ -15,23 +10,7 @@ type AddProductProps = {
 
 export function AddProduct(props: AddProductProps) {
 	const { trigger } = props
-	const formRef = useRef<HTMLFormElement | null>(null)
-	const [state, formAction] = useFormState(createProduct, {})
-	const { toast } = useToast()
-
-	useEffect(() => {
-		if (state.success) {
-			toast({ title: 'Success', description: 'Product added successfully' })
-			formRef.current?.reset()
-		}
-	}, [toast, state.success])
-
-	useEffect(() => {
-		if (state.errors && state.errors.submit) {
-			toast({ title: 'Error', description: state.errors.submit })
-		}
-	}, [toast, state.errors])
-
+	const { formRef, state, action } = useAddProduct()
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger>
@@ -39,7 +18,7 @@ export function AddProduct(props: AddProductProps) {
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='New Product' description='Fill in the fields to add a new product' />
-				<ProductForm.Root ref={formRef} action={formAction}>
+				<ProductForm.Root ref={formRef} action={action}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name errorMessage={state.errors?.validation?.name} />
 						<ProductForm.Fields.ImageUrl errorMessage={state.errors?.validation?.imageUrl} />
