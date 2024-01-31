@@ -1,11 +1,10 @@
 'use client'
-import { useState } from 'react'
+import { useEditProduct } from './hooks/use-edit-product'
 
-import { ProductDialog } from '../product-dialog'
-import { ProductForm } from '../product-form'
+import { ProductDialog } from '../../product-dialog'
+import { ProductForm } from '../../product-form'
 
 import type { ProductEntity } from '@/entities/product.entity'
-import { editProduct } from '@/app/product/actions'
 
 type EditProductProps = {
 	id: number
@@ -15,19 +14,15 @@ type EditProductProps = {
 
 export function EditProduct(props: EditProductProps) {
 	const { id, values, trigger } = props
-	const [isOpen, setIsOpen] = useState(false)
-	const action = editProduct.bind(null, id)
+	const { open, onOpenChange, handleFormAction } = useEditProduct({ id })
 	return (
-		<ProductDialog.Root open={isOpen} onOpenChange={setIsOpen}>
+		<ProductDialog.Root open={open} onOpenChange={onOpenChange}>
 			<ProductDialog.Trigger asChild>
 				{trigger}
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='Edit Product' description='Change the fields you want to edit' />
-				<ProductForm.Root action={async (formData) => {
-					await action(formData)
-					setIsOpen(false)
-				}}>
+				<ProductForm.Root action={handleFormAction}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name defaultValue={values.name} />
 						<ProductForm.Fields.ImageUrl defaultValue={values.imageUrl} />
