@@ -22,7 +22,7 @@ function getFormValues(formData: FormData): Partial<Omit<ProductEntity, 'id'>> {
 	const stock = formData.get('stock')?.toString()
 	return {
 		name: formData.get('name')?.toString() || undefined,
-		imageUrl: formData.get('imageUrl')?.toString() || undefined,
+		image_url: formData.get('imageUrl')?.toString() || undefined,
 		category: formData.get('category')?.toString() || undefined,
 		price: formData.get('price')?.toString() || undefined,
 		stock: stock ? Number(stock) : undefined,
@@ -38,8 +38,8 @@ export async function createProduct(
 	if (validationError) return { success: false, errors: { validation: validationError } }
 	try {
 		await sql`
-			INSERT INTO products (name, imageUrl, price, category, stock)
-			VALUES (${product.name}, ${product.imageUrl}, ${parseDecimal(product.price!)}, ${product.category}, ${product.stock})
+			INSERT INTO products (name, image_url, price, category, stock)
+			VALUES (${product.name}, ${product.image_url}, ${parseDecimal(product.price!)}, ${product.category}, ${product.stock})
 		`
 		revalidatePath('/')
 		return { success: true }

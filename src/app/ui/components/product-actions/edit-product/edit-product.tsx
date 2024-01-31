@@ -25,7 +25,7 @@ export function EditProduct(props: EditProductProps) {
 				<ProductForm.Root action={handleFormAction}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name defaultValue={values.name} />
-						<ProductForm.Fields.ImageUrl defaultValue={values.imageUrl} />
+						<ProductForm.Fields.ImageUrl defaultValue={values.image_url ?? undefined} />
 						<ProductForm.Fields.Price defaultValue={values.price} />
 						<ProductForm.Fields.Category defaultValue={values.category} />
 						<ProductForm.Fields.Stock defaultValue={values.stock} />

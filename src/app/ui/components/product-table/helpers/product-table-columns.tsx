@@ -54,9 +54,9 @@ export const productTableColumns: ColumnDef<ProductEntity>[] = [
 				/>
 			)
 		},
-		accessorFn: (value) => ({ name: value.name, imageUrl: value.imageUrl }),
+		accessorFn: (value) => ({ name: value.name, imageUrl: value.image_url }),
 		cell: ({ cell }) => {
-			const value = cell.getValue() as Pick<ProductEntity, 'name' | 'imageUrl'>
+			const value = cell.getValue() as { name: string; imageUrl?: string}
 			return <ProductCard name={value.name} imageUrl={value.imageUrl} />
 		},
 		id: 'product',

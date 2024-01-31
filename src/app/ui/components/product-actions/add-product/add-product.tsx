@@ -21,7 +21,7 @@ export function AddProduct(props: AddProductProps) {
 				<ProductForm.Root ref={formRef} action={action}>
 					<ProductForm.Fieldset>
 						<ProductForm.Fields.Name errorMessage={state.errors?.validation?.name} />
-						<ProductForm.Fields.ImageUrl errorMessage={state.errors?.validation?.imageUrl} />
+						<ProductForm.Fields.ImageUrl errorMessage={state.errors?.validation?.image_url} />
 						<ProductForm.Fields.Price errorMessage={state.errors?.validation?.price} />
 						<ProductForm.Fields.Category errorMessage={state.errors?.validation?.category} />
 						<ProductForm.Fields.Stock errorMessage={state.errors?.validation?.stock} />
