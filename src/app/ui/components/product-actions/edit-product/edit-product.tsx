@@ -7,7 +7,7 @@ import { ProductForm } from '../../product-form'
 import type { ProductEntity } from '@/entities/product.entity'
 
 type EditProductProps = {
-	id: number
+	id: string
 	values: ProductEntity
 	trigger: React.JSX.Element
 }

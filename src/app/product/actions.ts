@@ -3,6 +3,7 @@ import { sql } from '@vercel/postgres'
 
 import { productValidation } from '@/validations/product.validation'
 import { ErrorMessages } from '../constants/error-messages'
+import { parseDecimal } from '@/helpers/parse-decimal'
 
 import type { ProductEntity } from '@/entities/product.entity'
 
@@ -37,7 +38,7 @@ export async function createProduct(
 	try {
 		await sql`
 			INSERT INTO products (name, imageUrl, price, category, stock)
-			VALUES (${product.name}, ${product.imageUrl}, ${product.price}, ${product.category}, ${product.stock})
+			VALUES (${product.name}, ${product.imageUrl}, ${parseDecimal(product.price!)}, ${product.category}, ${product.stock})
 		`
 		return { success: true }
 	} catch (err) {
@@ -46,10 +47,10 @@ export async function createProduct(
 	}
 }
 
-export async function editProduct(id: number, formData: FormData) {
+export async function editProduct(id: string, formData: FormData) {
 	console.log(id, formData)
 }
 
-export async function deleteProduct(id: number) {
+export async function deleteProduct(id: string) {
 	await sql`DELETE FROM products WHERE products.id = ${id};`
 }

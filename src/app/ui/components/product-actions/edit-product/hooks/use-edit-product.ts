@@ -1,7 +1,7 @@
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import { editProduct } from '@/app/product/actions'
 
-type UseEditProductParams = { id: number }
+type UseEditProductParams = { id: string }
 type UseEditProductReturn = {
 	open: boolean
 	onOpenChange: Dispatch<SetStateAction<boolean>>
