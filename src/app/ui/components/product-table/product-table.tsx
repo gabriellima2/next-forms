@@ -1,12 +1,12 @@
 'use client'
 import { useProductTable } from './hooks/use-product-table'
 
-import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
 import { BaseInput, SelectedRowsCounter, PaginationButton, Button } from '../../atoms'
+import { FilterByStock, ProductTableBody, ProductTableHeader } from './components'
+import { ProductActions } from '../product-actions'
 import { Table } from '../table'
 
 import type { ProductEntity } from '@/entities/product.entity'
-import { ProductActions } from '../product-actions'
 
 type ProductTableProps = {
 	products: ProductEntity[]

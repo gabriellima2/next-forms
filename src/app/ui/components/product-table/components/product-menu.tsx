@@ -6,11 +6,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuItem,
 } from '../../dropdown-menu'
+import { ProductActions } from '../../product-actions'
 import { MenuButton } from '@/app/ui/atoms'
 
-import type { ProductEntity } from '@/entities/product.entity'
 import { deleteProduct } from '@/app/product/actions'
-import { ProductActions } from '../../product-actions'
+
+import type { ProductEntity } from '@/entities/product.entity'
 
 type ProductActionsProps = {
 	product: ProductEntity
