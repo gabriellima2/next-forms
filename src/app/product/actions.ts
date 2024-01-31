@@ -41,7 +41,8 @@ export async function createProduct(
 		`
 		return { success: true }
 	} catch (err) {
-		return { success: false, errors: { submit: ErrorMessages.UnexpectedError } }
+		const message = (err as Error).message ?? ErrorMessages.UnexpectedError
+		return { success: false, errors: { submit: message } }
 	}
 }
 
