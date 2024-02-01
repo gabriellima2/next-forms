@@ -12,10 +12,11 @@ type ProductTableBodyProps = {
 
 export function ProductTableBody(props: ProductTableBodyProps) {
 	const { rows } = props
-	if (!rows || !rows.length) return <NoResults />
+	const hasEmptyRows = !rows || !rows.length
 	return (
 		<TableBody>
-			{rows.map((row) => (
+			{hasEmptyRows && <NoResults />}
+			{!hasEmptyRows && rows.map((row) => (
 				<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
 					<ProductTableBodyCells cells={row.getVisibleCells()} />
 				</TableRow>
