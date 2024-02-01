@@ -18,9 +18,10 @@ export type ProductActionsFormState = {
 	}
 }
 
-function getFormValues(formData: FormData): Partial<Omit<ProductEntity, 'id'>> {
+function getFormValues(formData: FormData): Partial<ProductEntity> {
 	const stock = formData.get('stock')?.toString()
 	return {
+		id: formData.get('id')?.toString() || undefined,
 		name: formData.get('name')?.toString() || undefined,
 		image_url: formData.get('imageUrl')?.toString() || undefined,
 		category: formData.get('category')?.toString() || undefined,
@@ -49,8 +50,25 @@ export async function createProduct(
 	}
 }
 
-export async function editProduct(id: string, formData: FormData) {
-	console.log(id, formData)
+export async function editProduct(
+	_: ProductActionsFormState,
+	formData: FormData
+): Promise<ProductActionsFormState> {
+	const product = getFormValues(formData)
+	console.log(product)
+	const error = validateProduct(product)
+	if (error) return { success: false, errors: { validation: error } }
+	try {
+		await sql`
+		UPDATE products
+		SET name = ${product.name}, image_url = ${product.image_url}, price = ${parseDecimal(product.price!)}, category = ${product.category}, stock = ${product.stock}
+		WHERE id = ${product.id}`
+		revalidatePath('/')
+		return { success: true }
+	} catch (err) {
+		const message = (err as Error).message ?? ErrorMessages.UnexpectedError
+		return { success: false, errors: { submit: message } }
+	}
 }
 
 export async function deleteProduct(id: string) {

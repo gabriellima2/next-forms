@@ -14,7 +14,7 @@ type EditProductProps = {
 
 export function EditProduct(props: EditProductProps) {
 	const { id, values, trigger } = props
-	const { open, onOpenChange, handleFormAction } = useEditProduct({ id })
+	const { open, onOpenChange, action } = useEditProduct()
 	return (
 		<ProductDialog.Root open={open} onOpenChange={onOpenChange}>
 			<ProductDialog.Trigger asChild>
@@ -22,8 +22,9 @@ export function EditProduct(props: EditProductProps) {
 			</ProductDialog.Trigger>
 			<ProductDialog.Content className='flex flex-col gap-8'>
 				<ProductDialog.Header title='Edit Product' description='Change the fields you want to edit' />
-				<ProductForm.Root action={handleFormAction}>
+				<ProductForm.Root action={action}>
 					<ProductForm.Fieldset>
+						<input type='hidden' name='id' id='id' value={id} />
 						<ProductForm.Fields.Name defaultValue={values.name} />
 						<ProductForm.Fields.ImageUrl defaultValue={values.image_url ?? undefined} />
 						<ProductForm.Fields.Price defaultValue={values.price} />

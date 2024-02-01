@@ -1,26 +1,36 @@
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { useState, type Dispatch, type SetStateAction, useEffect } from 'react'
+import { useFormState } from 'react-dom'
+
+import { useToast } from '@/hooks/use-toast'
 import { editProduct } from '@/app/actions'
 
-type UseEditProductParams = { id: string }
 type UseEditProductReturn = {
 	open: boolean
 	onOpenChange: Dispatch<SetStateAction<boolean>>
-	handleFormAction: (formData: FormData) => Promise<void>
+	action: (formData: FormData) => void
 }
 
-export function useEditProduct(params: UseEditProductParams): UseEditProductReturn {
-	const { id } = params
+export function useEditProduct(): UseEditProductReturn {
+	const [state, action] = useFormState(editProduct, {})
 	const [isOpen, setIsOpen] = useState(false)
-	const action = editProduct.bind(null, id)
+	const { toast } = useToast()
 
-	const handleFormAction = async (formData: FormData) => {
-		await action(formData)
-		setIsOpen(false)
-	}
+	useEffect(() => {
+		if (state.success) {
+			toast({ title: 'Success', description: 'Product edited successfully' })
+			setIsOpen(false)
+		}
+	}, [toast, state.success])
+
+	useEffect(() => {
+		if (state.errors && state.errors.submit) {
+			toast({ title: 'Error', description: state.errors.submit })
+		}
+	}, [toast, state.errors])
 
 	return {
 		open: isOpen,
 		onOpenChange: setIsOpen,
-		handleFormAction
+		action
 	}
 }
