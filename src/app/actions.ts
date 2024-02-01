@@ -66,4 +66,5 @@ export async function editProduct(
 
 export async function deleteProduct(id: string) {
 	await sql`DELETE FROM products WHERE products.id = ${id};`
+	revalidatePath('/')
 }

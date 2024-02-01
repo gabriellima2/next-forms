@@ -9,8 +9,6 @@ import {
 import { ProductActions } from '../../product-actions'
 import { MenuButton } from '@/app/ui/atoms'
 
-import { deleteProduct } from '@/app/actions'
-
 import type { ProductEntity } from '@/entities/product.entity'
 
 type ProductActionsProps = {
@@ -36,11 +34,11 @@ export function ProductMenu(props: ProductActionsProps) {
 						</DropdownMenuItem>
 					}
 				/>
-				<ProductActions.Delete trigger={
-					<DropdownMenuItem className='cursor-pointer' onClick={() => deleteProduct(product.id)}>
-						Delete
+				<ProductActions.Delete trigger={({ handleDelete }) => (
+					<DropdownMenuItem className='cursor-pointer' onClick={() => handleDelete(product.id)}>
+							Delete
 					</DropdownMenuItem>
-				} />
+				)} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
