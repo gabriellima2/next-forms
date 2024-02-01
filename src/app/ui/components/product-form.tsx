@@ -25,6 +25,10 @@ const Fieldset = (props: FieldsetHTMLAttributes<HTMLFieldSetElement>) => {
 	)
 }
 
+const ID = (props: Pick<DefaultFieldProps, 'defaultValue' | 'value'>) => (
+	<input type='hidden' name='id' id='id' {...props} />
+)
+
 const Name = (props: DefaultFieldProps) => (
 	<Field type='text' id='name' labelText='Name' placeholder='Ex: Keychron K3' {...props} />
 )
@@ -57,6 +61,7 @@ export const ProductForm = {
 	Root,
 	Fieldset,
 	Fields: {
+		ID,
 		Name,
 		ImageUrl,
 		Price,

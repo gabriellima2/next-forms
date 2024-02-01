@@ -24,7 +24,7 @@ export function EditProduct(props: EditProductProps) {
 				<ProductDialog.Header title='Edit Product' description='Change the fields you want to edit' />
 				<ProductForm.Root action={action}>
 					<ProductForm.Fieldset>
-						<input type='hidden' name='id' id='id' value={id} />
+						<ProductForm.Fields.ID defaultValue={id} />
 						<ProductForm.Fields.Name defaultValue={values.name} />
 						<ProductForm.Fields.ImageUrl defaultValue={values.image_url ?? undefined} />
 						<ProductForm.Fields.Price defaultValue={values.price} />
