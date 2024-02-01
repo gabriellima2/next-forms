@@ -1,33 +1,20 @@
-import { useEffect, useRef, type MutableRefObject } from 'react'
-import { useFormState } from 'react-dom'
+import {  useRef, type MutableRefObject } from 'react'
 
-import { useToast } from '@/hooks/use-toast'
-import { createProduct, type ProductActionsFormState } from '@/app/actions'
+import { useForm } from '@/hooks/use-form'
+import { createProduct } from '@/app/actions'
+
+import type { ProductEntity } from '@/entities/product.entity'
+import type { ActionEntity } from '@/entities/action.entity'
 
 type UseAddProductReturn = {
 	formRef: MutableRefObject<HTMLFormElement | null>
-	state: ProductActionsFormState
-	action: (formData: FormData) => void
+	state: ActionEntity<ProductEntity>
+	action: (payload: FormData) => void
 }
 
 export function useAddProduct(): UseAddProductReturn {
 	const formRef = useRef<HTMLFormElement | null>(null)
-	const [state, action] = useFormState(createProduct, {})
-	const { toast } = useToast()
-
-	useEffect(() => {
-		if (state.success) {
-			toast({ title: 'Success', description: 'Product added successfully' })
-			formRef.current?.reset()
-		}
-	}, [toast, state.success])
-
-	useEffect(() => {
-		if (state.errors && state.errors.submit) {
-			toast({ title: 'Error', description: state.errors.submit })
-		}
-	}, [toast, state.errors])
-
+	const { state, action } = useForm<ProductEntity>({action: createProduct, onSuccess: () => formRef.current?.reset()})
 	return {
 		formRef,
 		state,

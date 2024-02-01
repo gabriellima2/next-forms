@@ -7,16 +7,9 @@ import { ErrorMessages } from '@/constants/error-messages'
 import { parseDecimal } from '@/helpers/parse-decimal'
 
 import type { ProductEntity } from '@/entities/product.entity'
+import type { ActionEntity } from '@/entities/action.entity'
 
-export type ProductActionsFormState = {
-	success?: boolean
-	errors?: {
-		validation?: Partial<{
-			[P in keyof Omit<ProductEntity, 'id'>]: string;
-		}>
-		submit?: string
-	}
-}
+type State = ActionEntity<ProductEntity>
 
 function getFormValues(formData: FormData): Partial<ProductEntity> {
 	const getValue = (id: string) => formData.get(id)?.toString() || undefined
@@ -32,9 +25,9 @@ function getFormValues(formData: FormData): Partial<ProductEntity> {
 }
 
 export async function createProduct(
-	_: ProductActionsFormState,
+	_: State,
 	formData: FormData
-): Promise<ProductActionsFormState> {
+): Promise<State> {
 	const product = getFormValues(formData)
 	const error = validateProduct(product)
 	if (error) return { success: false, errors: { validation: error } }
@@ -52,9 +45,9 @@ export async function createProduct(
 }
 
 export async function editProduct(
-	_: ProductActionsFormState,
+	_: State,
 	formData: FormData
-): Promise<ProductActionsFormState> {
+): Promise<State> {
 	const product = getFormValues(formData)
 	const error = validateProduct(product)
 	if (error) return { success: false, errors: { validation: error } }
