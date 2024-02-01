@@ -2,7 +2,7 @@
 import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
 
-import { productValidation } from '@/validations/product.validation'
+import { validateProduct } from '@/validations/validate-product'
 import { ErrorMessages } from '@/constants/error-messages'
 import { parseDecimal } from '@/helpers/parse-decimal'
 
@@ -34,7 +34,7 @@ export async function createProduct(
 	formData: FormData
 ): Promise<ProductActionsFormState> {
 	const product = getFormValues(formData)
-	const validationError = productValidation(product)
+	const validationError = validateProduct(product)
 	if (validationError) return { success: false, errors: { validation: validationError } }
 	try {
 		await sql`

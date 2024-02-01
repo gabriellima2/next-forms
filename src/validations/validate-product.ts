@@ -5,7 +5,7 @@ import type { ProductEntity } from '@/entities/product.entity'
 
 type Product = Partial<Omit<ProductEntity, 'id'>>
 
-export function productValidation(product: Product) {
+export function validateProduct(product: Product) {
 	const validatedProduct = ProductSchema.safeParse(product)
 	if (validatedProduct.success) return
 	return refineZodValidationError(validatedProduct)
