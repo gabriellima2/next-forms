@@ -19,13 +19,14 @@ export type ProductActionsFormState = {
 }
 
 function getFormValues(formData: FormData): Partial<ProductEntity> {
-	const stock = formData.get('stock')?.toString()
+	const getValue = (id: string) => formData.get(id)?.toString() || undefined
+	const stock = getValue('stock')
 	return {
-		id: formData.get('id')?.toString() || undefined,
-		name: formData.get('name')?.toString() || undefined,
-		image_url: formData.get('imageUrl')?.toString() || undefined,
-		category: formData.get('category')?.toString() || undefined,
-		price: formData.get('price')?.toString() || undefined,
+		id: getValue('id'),
+		name: getValue('name'),
+		image_url: getValue('imageUrl'),
+		category: getValue('category'),
+		price: getValue('price'),
 		stock: stock ? Number(stock) : undefined,
 	}
 }
@@ -35,8 +36,8 @@ export async function createProduct(
 	formData: FormData
 ): Promise<ProductActionsFormState> {
 	const product = getFormValues(formData)
-	const validationError = validateProduct(product)
-	if (validationError) return { success: false, errors: { validation: validationError } }
+	const error = validateProduct(product)
+	if (error) return { success: false, errors: { validation: error } }
 	try {
 		await sql`
 			INSERT INTO products (name, image_url, price, category, stock)
@@ -55,7 +56,6 @@ export async function editProduct(
 	formData: FormData
 ): Promise<ProductActionsFormState> {
 	const product = getFormValues(formData)
-	console.log(product)
 	const error = validateProduct(product)
 	if (error) return { success: false, errors: { validation: error } }
 	try {
