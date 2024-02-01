@@ -3,14 +3,9 @@ import { useToast } from '@/hooks/use-toast'
 import { deleteProduct } from '@/app/actions'
 import { ErrorMessages } from '@/constants/error-messages'
 
-type TriggerProps = { handleDelete: (id: string) => Promise<void> }
+export type UseDeleteProductReturn = { handleDelete: (id: string) => Promise<void> }
 
-type DeleteProductProps = {
-	trigger: (props: TriggerProps) => React.JSX.Element
-}
-
-export const DeleteProduct = (props: DeleteProductProps) => {
-	const { trigger } = props
+export function useDeleteProduct() {
 	const { toast } = useToast()
 
 	const handleDelete = async (id: string) => {
@@ -23,10 +18,5 @@ export const DeleteProduct = (props: DeleteProductProps) => {
 		}
 	}
 
-	return (
-		<>
-			{trigger({ handleDelete })}
-		</>
-	)
+	return { handleDelete }
 }
-
