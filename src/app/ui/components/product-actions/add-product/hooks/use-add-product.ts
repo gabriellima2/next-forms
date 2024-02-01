@@ -1,4 +1,4 @@
-import {  useRef, type MutableRefObject } from 'react'
+import { useRef, useCallback, type MutableRefObject } from 'react'
 
 import { useForm } from '@/hooks/use-form'
 import { createProduct } from '@/app/actions'
@@ -14,7 +14,8 @@ type UseAddProductReturn = {
 
 export function useAddProduct(): UseAddProductReturn {
 	const formRef = useRef<HTMLFormElement | null>(null)
-	const { state, action } = useForm<ProductEntity>({action: createProduct, onSuccess: () => formRef.current?.reset()})
+	const onSuccess = useCallback(() => formRef.current?.reset(), [formRef])
+	const { state, action } = useForm<ProductEntity>({action: createProduct, onSuccess})
 	return {
 		formRef,
 		state,

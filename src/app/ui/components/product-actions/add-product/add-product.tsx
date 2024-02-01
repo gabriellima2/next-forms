@@ -11,6 +11,7 @@ type AddProductProps = {
 export function AddProduct(props: AddProductProps) {
 	const { trigger } = props
 	const { formRef, state, action } = useAddProduct()
+	const errors = typeof state.message !== 'string' ? state.message : null
 	return (
 		<ProductDialog.Root>
 			<ProductDialog.Trigger>
@@ -20,11 +21,11 @@ export function AddProduct(props: AddProductProps) {
 				<ProductDialog.Header title='New Product' description='Fill in the fields to add a new product' />
 				<ProductForm.Root ref={formRef} action={action}>
 					<ProductForm.Fieldset>
-						<ProductForm.Fields.Name errorMessage={state.errors?.validation?.name} />
-						<ProductForm.Fields.ImageUrl errorMessage={state.errors?.validation?.image_url} />
-						<ProductForm.Fields.Price errorMessage={state.errors?.validation?.price} />
-						<ProductForm.Fields.Category errorMessage={state.errors?.validation?.category} />
-						<ProductForm.Fields.Stock errorMessage={state.errors?.validation?.stock} />
+						<ProductForm.Fields.Name errorMessage={errors?.name} />
+						<ProductForm.Fields.ImageUrl errorMessage={errors?.image_url} />
+						<ProductForm.Fields.Price errorMessage={errors?.price} />
+						<ProductForm.Fields.Category errorMessage={errors?.category} />
+						<ProductForm.Fields.Stock errorMessage={errors?.stock} />
 					</ProductForm.Fieldset>
 					<ProductDialog.Footer>
 						<ProductDialog.Close>Cancel</ProductDialog.Close>

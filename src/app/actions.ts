@@ -29,18 +29,18 @@ export async function createProduct(
 	formData: FormData
 ): Promise<State> {
 	const product = getFormValues(formData)
-	const error = validateProduct(product)
-	if (error) return { success: false, errors: { validation: error } }
+	const errors = validateProduct(product)
+	if (errors) return { success: false, message: errors }
 	try {
 		await sql`
 			INSERT INTO products (name, image_url, price, category, stock)
 			VALUES (${product.name}, ${product.image_url}, ${parseDecimal(product.price!)}, ${product.category}, ${product.stock})
 		`
 		revalidatePath('/')
-		return { success: true }
+		return { success: true, message: 'The product was created successfully' }
 	} catch (err) {
 		const message = (err as Error).message ?? ErrorMessages.UnexpectedError
-		return { success: false, errors: { submit: message } }
+		return { success: false, message }
 	}
 }
 
@@ -49,18 +49,18 @@ export async function editProduct(
 	formData: FormData
 ): Promise<State> {
 	const product = getFormValues(formData)
-	const error = validateProduct(product)
-	if (error) return { success: false, errors: { validation: error } }
+	const errors = validateProduct(product)
+	if (errors) return { success: false, message: errors }
 	try {
 		await sql`
 		UPDATE products
 		SET name = ${product.name}, image_url = ${product.image_url}, price = ${parseDecimal(product.price!)}, category = ${product.category}, stock = ${product.stock}
 		WHERE id = ${product.id}`
 		revalidatePath('/')
-		return { success: true }
+		return { success: true, message: 'The product was edited successfully' }
 	} catch (err) {
 		const message = (err as Error).message ?? ErrorMessages.UnexpectedError
-		return { success: false, errors: { submit: message } }
+		return { success: false, message }
 	}
 }
 

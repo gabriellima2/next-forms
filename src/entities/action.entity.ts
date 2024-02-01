@@ -1,3 +1,4 @@
+/*
 export type ActionEntity<Entity> = {
 	success?: boolean
 	errors?: {
@@ -6,4 +7,12 @@ export type ActionEntity<Entity> = {
 		}>
 		submit?: string
 	}
+}
+*/
+
+export type ActionEntity<Entity> = {
+	success?: boolean
+	message: string | Partial<{
+		[P in keyof Omit<Entity, 'id'>]: string;
+	}>
 }

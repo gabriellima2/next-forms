@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
 import { useToast } from './use-toast'
+
+import { ErrorMessages } from '@/constants/error-messages'
 import type { ActionEntity } from '@/entities/action.entity'
 
 type UseFormParams<Entity extends object> = {
@@ -20,18 +22,13 @@ export function useForm<Entity extends object>(params: UseFormParams<Entity>): U
 	const { toast } = useToast()
 
 	useEffect(() => {
-		if (state.success) {
-			toast({ title: 'Success', description: 'The action was successful' })
-			onSuccess && onSuccess()
+		const title = state.success ? 'Success' : 'Error'
+		const message = typeof state.message === 'string' ? state.message : ErrorMessages.UnexpectedError
+		if (typeof state.success === 'boolean') {
+			toast({ title, description: message })
+			state.success ? onSuccess && onSuccess() : onError && onError()
 		}
-	}, [toast, state.success])
-
-	useEffect(() => {
-		if (state.errors && state.errors.submit) {
-			toast({ title: 'Error', description: state.errors.submit })
-			onError && onError()
-		}
-	}, [toast, state.errors])
+	}, [toast, state])
 
 	return { state: state as ActionEntity<Entity>, action: dispatch }
 }
