@@ -9,7 +9,7 @@ import {
 import { ProductActions } from '../../product-actions'
 import { MenuButton } from '@/app/ui/atoms'
 
-import { deleteProduct } from '@/app/product/actions'
+import { deleteProduct } from '@/app/actions'
 
 import type { ProductEntity } from '@/entities/product.entity'
 

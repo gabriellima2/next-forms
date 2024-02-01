@@ -1,5 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from 'react'
-import { editProduct } from '@/app/product/actions'
+import { editProduct } from '@/app/actions'
 
 type UseEditProductParams = { id: string }
 type UseEditProductReturn = {

@@ -2,7 +2,7 @@ import { useEffect, useRef, type MutableRefObject } from 'react'
 import { useFormState } from 'react-dom'
 
 import { useToast } from '@/hooks/use-toast'
-import { createProduct, type ProductActionsFormState } from '@/app/product/actions'
+import { createProduct, type ProductActionsFormState } from '@/app/actions'
 
 type UseAddProductReturn = {
 	formRef: MutableRefObject<HTMLFormElement | null>

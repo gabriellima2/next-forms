@@ -3,7 +3,7 @@ import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
 
 import { productValidation } from '@/validations/product.validation'
-import { ErrorMessages } from '../constants/error-messages'
+import { ErrorMessages } from '@/constants/error-messages'
 import { parseDecimal } from '@/helpers/parse-decimal'
 
 import type { ProductEntity } from '@/entities/product.entity'
