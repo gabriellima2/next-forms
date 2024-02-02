@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+ # Next Forms
 
-## Getting Started
+Aplicação para gerenciamento de estoque. Possui uma tabela dinâmica e amigável ao usuário.
 
-First, run the development server:
+Este projeto foi desenvolvido como uma maneira de praticar e explorar as funcionalidades mais recentes introduzidas no NextJS. Nessa aplicação utilizei as [Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers), [Vercel Postgres](https://nextjs.org/learn/dashboard-app/setting-up-your-database) e [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations), que são combinadas com uma abordagem alternativa para gerenciar formulários no React, utilizando os hooks [useFormState](https://react.dev/reference/react-dom/hooks/useFormState) e [useFormStatus](https://react.dev/reference/react-dom/hooks/useFormStatus).
+
+Para a implementação da tabela, utilizei as bibliotecas [shadcn-ui](https://ui.shadcn.com/) e [react-table](https://tanstack.com/table/latest). Essas ferramentas facilitaram a criação de uma tabela interativa, garantindo ao mesmo tempo a acessibilidade para todos os usuários
+
+## Tecnologias
+- [NextJS](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Zod](https://zod.dev/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [React Table](https://tanstack.com/table/latest)
+
+## Configuração
+
+Você precisa ter o [Git](https://git-scm.com/) e algum gerenciador de pacotes([NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/) | [Yarn](https://classic.yarnpkg.com/lang/en/docs/install)) instalados em sua máquina.
+
+### Criando um banco de dados na Vercel
+Inicialmente, é necessário acessar o site da [Vercel](https://vercel.com). Se você já possui uma conta, faça o login. Caso contrário, crie uma nova conta
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Navegue até a aba ‘Storage’.
+2. Para criar um novo banco de dados, clique em ‘Create Database’.
+3. Escolha ‘Postgres’ como o tipo de banco de dados a ser criado.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Preparando o ambiente
+```bash
+1. Clone o repositório:
+$ git clone https://github.com/gabriellima2/next-forms.git
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Acesse a pasta e instale as dependências via terminal:
+$ yarn / npm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### Defina as variáveis de ambiente
+```bash
+1. Renomeie o arquivo
+	.env.example -> .env
 
-## Learn More
+2. Preencha os campos com os valores correspondentes às variáveis de ambiente. Esses valores podem ser localizados na aba ‘.env.local’ das configurações do seu banco de dados
+	POSTGRES_URL=
+	POSTGRES_PRISMA_URL=
+	POSTGRES_URL_NON_POOLING=
+	POSTGRES_USER=
+	POSTGRES_HOST=
+	POSTGRES_PASSWORD=
+	POSTGRES_DATABASE=
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Criando a tabela no banco de dados
+```bash
+1. Acesse o terminal e execute o seguinte comando
+curl -i -H 'Accept: application/json' http://localhost:3000/api/create-products-table
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Rodando a aplicação
+```bash
+1. Inicie a aplicação em modo de desenvolvimento:
+$ yarn dev / npm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. O servidor será aberto em http://localhost:3000
+```
 
-## Deploy on Vercel
+<p align="center">Made with 💙 by <a href="https://www.linkedin.com/in/gabriel-lima-860612236">Gabriel Lima</a></p>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
